@@ -3,7 +3,7 @@ const nodemailer = require("nodemailer");
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -35,6 +35,8 @@ app.post("/send-email", (req, res) => {
     text: `${message}`,
   };
 
+	
+
   // Send the email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
@@ -47,6 +49,10 @@ app.post("/send-email", (req, res) => {
   });
 
 });
+
+app.get("/", (req, res) => {
+	console.log("Bienvenido!!");
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
