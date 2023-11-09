@@ -1,10 +1,18 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
+const cors = require('cors'); 
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+const corsOptions = {
+  origin: ['http://localhost:4200', 'https://cuaticalaagencia.com'], // Replace with your Angular app's URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // enable set cookie
+  optionsSuccessStatus: 204,
+};
 
+app.use(cors());
 app.use(express.json());
 
 const transporter = nodemailer.createTransport({
