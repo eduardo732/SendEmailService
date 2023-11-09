@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 const transporter = nodemailer.createTransport({
-  host: "smpt.hostinger.com",
+  host: "smtp.hostinger.com",
   secure: true,
   secureConnection: false,
   tls: {
