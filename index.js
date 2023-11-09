@@ -37,10 +37,12 @@ app.post("/send-email", (req, res) => {
 
 	// Create email content
   const mailOptions = {
-    from: process.env.MAIL_SENDER,
-    to: email,
+    from: process.env.HOSTINGER_USER,
+    to: process.env.ADDRESS,
     subject: subject,
-    text: `${message}`,
+    text: `${message}
+		\n${name}
+		\nFavor contactarse al correo: ${email}`,
   };
 
 	
@@ -49,7 +51,7 @@ app.post("/send-email", (req, res) => {
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error('Error sending email:', error);
-      res.status(500).send('Error sending email');
+      res.status(500).send('Error sending email ', error.response);
     } else {
       console.log('Email sent:', info.response);
       res.status(200).send('Email sent successfully');
