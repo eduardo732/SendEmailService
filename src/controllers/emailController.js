@@ -2,6 +2,7 @@ import sendEmail from "../services/emailService.js";
 
 const defineEndpoints = (app) => {
   app.post("/send-email", async (req, res) => {
+    console.log(req.body);
     const { name, email, subject, message, organization } = req.body;
 
     const result = await sendEmail({ name, email, subject, message, organization });
