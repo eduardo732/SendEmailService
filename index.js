@@ -1,68 +1,16 @@
-const express = require("express");
-const nodemailer = require("nodemailer");
-const cors = require('cors'); 
-require('dotenv').config();
+import express, { json } from "express";
+import cors from "cors";
+import { defineEndpoints } from "./src/controllers/emailController";
+
+require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const corsOptions = {
-  origin: ['http://localhost:4200', 'https://cuaticalaagencia.com', 'https://desarrollo.cuaticalaagencia.com'], 
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // enable set cookie
-  optionsSuccessStatus: 204,
-};
 
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.hostinger.com",
-  secure: true,
-  secureConnection: false,
-  tls: {
-    ciphers: "SSLv3",
-  },
-  requireTLS: true,
-  port: 465,
-  debug: true,
-  connectionTimeout: 10000,
-  auth: {
-    user: process.env.HOSTINGER_USER,
-    pass: process.env.HOSTINGER_PASS,
-  },
-});
-
-app.post("/send-email", (req, res) => {
-  const { name, email, subject, message } = req.body;
-
-	// Create email content
-  const mailOptions = {
-    from: process.env.HOSTINGER_USER,
-    to: process.env.ADDRESS,
-    subject: subject,
-    text: `${message}
-		\n${name}
-		\nFavor contactarse al correo: ${email}`,
-  };
-
-	
-
-  // Send the email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error('Error sending email:', error);
-      res.status(500).send('Error sending email ', error.response);
-    } else {
-      console.log('Email sent:', info.response);
-      res.status(200).send('Email sent successfully');
-    }
-  });
-
-});
-
-app.get("/", (req, res) => {
-	console.log("Bienvenido!!");
-})
+defineEndpoints(app);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
