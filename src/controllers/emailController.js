@@ -1,4 +1,4 @@
-import { sendEmail } from "../services/emailService";
+import sendEmail from "../services/emailService.js";
 
 const defineEndpoints = (app) => {
   app.post("/send-email", async (req, res) => {
@@ -19,4 +19,4 @@ const defineEndpoints = (app) => {
   });
 };
 
-export default { defineEndpoints };
+export default defineEndpoints ;

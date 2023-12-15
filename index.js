@@ -1,8 +1,9 @@
 import express, { json } from "express";
 import cors from "cors";
-import { defineEndpoints } from "./src/controllers/emailController";
+import dotenv from 'dotenv';
+import defineEndpoints from "./src/controllers/emailController.js";
 
-require("dotenv").config();
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
